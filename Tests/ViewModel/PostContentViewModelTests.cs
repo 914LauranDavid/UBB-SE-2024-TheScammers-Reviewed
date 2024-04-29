@@ -469,6 +469,54 @@ namespace Tests.ViewModel
         }
 
         [Test]
+        public void TimePosted_AnyPost_ReturnsCorrectStringForTotalMinutesLessThan60()
+        {
+            DateTime creationDate = DateTime.Now.AddMinutes(-30);
+            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            typeof(Post).GetProperty("CreationDate").SetValue(noTypePost, creationDate);
+            postViewModel.Post = noTypePost;
+
+            TimeSpan timePassed = DateTime.Now - creationDate;
+            string expectedResult = Math.Ceiling(timePassed.TotalMinutes).ToString() + PostContentViewModel.MINUTES_AGO;
+
+            string actualResult = postViewModel.TimePosted;
+
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void TimePosted_AnyPost_ReturnsCorrectStringForTotalHoursLessThan24()
+        {
+            DateTime creationDate = DateTime.Now.AddHours(-12);
+            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            typeof(Post).GetProperty("CreationDate").SetValue(noTypePost, creationDate);
+            postViewModel.Post = noTypePost;
+
+            TimeSpan timePassed = DateTime.Now - creationDate;
+            string expectedResult = Math.Ceiling(timePassed.TotalHours).ToString() + " hours ago";
+
+            string actualResult = postViewModel.TimePosted;
+
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void TimePosted_AnyPost_ReturnsCorrectStringForTotalHoursMoreThan24()
+        {
+            DateTime creationDate = DateTime.Now.AddDays(-12);
+            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            typeof(Post).GetProperty("CreationDate").SetValue(noTypePost, creationDate);
+            postViewModel.Post = noTypePost;
+
+            TimeSpan timePassed = DateTime.Now - creationDate;
+            string expectedResult = Math.Ceiling(timePassed.TotalDays).ToString() + " days ago";
+
+            string actualResult = postViewModel.TimePosted;
+
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
         public void GetPost_AnyPost_PostIsCorrectlyReturned()
         {
             Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
