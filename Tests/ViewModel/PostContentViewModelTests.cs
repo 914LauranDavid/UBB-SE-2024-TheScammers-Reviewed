@@ -16,11 +16,23 @@ namespace Tests.ViewModel
     {
         private FakeUserService fakeUserService;
         private PostContentViewModel postViewModel;
+        private string donationButtonVisible;
+        private Post ourPost;
 
         [SetUp]
         public void SetUp()
         {
             fakeUserService = new FakeUserService();
+            ourPost = new Post();
+            ourPost.Type = Constants.DONATION_POST_TYPE;
+            postViewModel = new PostContentViewModel(ourPost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
+            Assert.That(postViewModel.DonationButtonVisible, Is.EqualTo(Constants.VISIBLE_VISIBILITY));
+            ourPost = new Post();
+            ourPost.Type = Constants.FIXED_PRICE_POST_TYPE;
+            postViewModel = new PostContentViewModel(ourPost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
+            ourPost = new Post();
+            ourPost.Type = Constants.AUCTION_POST_TYPE;
+            postViewModel = new PostContentViewModel(ourPost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
             postViewModel = new PostContentViewModel(new Post(), new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
         }
 
@@ -444,7 +456,7 @@ namespace Tests.ViewModel
         }
 
         [Test]
-        public void TimePosted_AnyPost_ReturnsCorrectString()
+        public void TimePosted_AnyPost_ReturnsCorrectStringForTotalSecondsLessThan60()
         {
             Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
             postViewModel.Post = noTypePost;
