@@ -51,6 +51,7 @@ namespace ISSLab.Model.Repositories
                     return allPosts[i];
                 }
             }
+
             throw new Exception("Post does not exist!");
         }
     }

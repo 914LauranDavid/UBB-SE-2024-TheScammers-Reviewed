@@ -184,7 +184,7 @@ namespace Tests.Services
         [Test]
         public void FavoritePost_PostDoesNotExist_ExceptionThrown()
         {
-            var exceptionMessage = Assert.Throws<Exception>(() => { postService.RemoveReport(Guid.NewGuid(), Guid.NewGuid()); });
+            var exceptionMessage = Assert.Throws<Exception>(() => { postService.FavoritePost(Guid.NewGuid(), Guid.NewGuid()); });
             Assert.That(exceptionMessage.Message, Is.EqualTo("Post not found"));
         }
 
@@ -204,7 +204,7 @@ namespace Tests.Services
         [Test]
         public void UnfavoritePost_PostDoesNotExist_ExceptionThrown()
         {
-            var exceptionMessage = Assert.Throws<Exception>(() => { postService.RemoveReport(Guid.NewGuid(), Guid.NewGuid()); });
+            var exceptionMessage = Assert.Throws<Exception>(() => { postService.UnfavoritePost(Guid.NewGuid(), Guid.NewGuid()); });
             Assert.That(exceptionMessage.Message, Is.EqualTo("Post not found"));
         }
 
