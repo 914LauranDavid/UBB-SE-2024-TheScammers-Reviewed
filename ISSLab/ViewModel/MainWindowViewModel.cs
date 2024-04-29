@@ -23,7 +23,6 @@ namespace ISSLab.ViewModel
         private ICreatePostViewModel postCreationViewModel;
         private IChatFactory chatFactory;
 
-        public IViewModelBase CurrentViewModel { get; }
         public MainWindowViewModel(IPostService givenPostService, IUserService givenUserService, Guid userId, Guid groupId, IChatFactory chatFactory)
         {
             this.postService = givenPostService;

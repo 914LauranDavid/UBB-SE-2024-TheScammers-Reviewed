@@ -40,8 +40,17 @@ namespace Tests.Model.Repositories
         }
 
         [Test]
-        public void FindById_InvalidId_ExceptionThrown()
+        public void FindById_NoGroups_ExceptionThrown()
         {
+            var exceptionMessage = Assert.Throws<Exception>(() => { groupRepository.FindById(Guid.Empty); });
+            Assert.That(exceptionMessage.Message, Is.EqualTo("Group does not exist"));
+        }
+
+        [Test]
+        public void FindById_NonExistingId_ExceptionThrown()
+        {
+            groupRepository.AddGroup(new Group());
+
             var exceptionMessage = Assert.Throws<Exception>(() => { groupRepository.FindById(Guid.Empty); });
             Assert.That(exceptionMessage.Message, Is.EqualTo("Group does not exist"));
         }
@@ -59,10 +68,20 @@ namespace Tests.Model.Repositories
         }
 
         [Test]
-        public void RemoveGroup_InvalidId_NoGroupIsRemoved()
+        public void RemoveGroup_NoGroup_NoGroupIsRemoved()
         {
             groupRepository.RemoveGroup(Guid.Empty);
             Assert.That(groupRepository.FindAll(), Is.Empty);
+        }
+
+        [Test]
+        public void RemoveGroup_NonexistingId_NoGroupIsRemoved()
+        {
+            groupRepository.AddGroup(new Group());
+
+            groupRepository.RemoveGroup(Guid.Empty);
+
+            Assert.That(groupRepository.FindAll().Count, Is.EqualTo(1));
         }
 
         [Test]

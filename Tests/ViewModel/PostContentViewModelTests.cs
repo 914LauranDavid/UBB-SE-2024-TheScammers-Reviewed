@@ -9,6 +9,7 @@ using ISSLab.Model;
 using ISSLab.Services;
 using ISSLab.View;
 using ISSLab.ViewModel;
+using Moq;
 
 namespace Tests.ViewModel
 {

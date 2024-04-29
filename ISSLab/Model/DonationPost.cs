@@ -59,17 +59,5 @@ namespace ISSLab.Model
             get { return donationPageLink; }
             set { donationPageLink = value; }
         }
-
-        public void Donate()
-        {
-            try
-            {
-                System.Diagnostics.Process.Start(donationPageLink);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Invalid URL");
-            }
-        }
     }
 }

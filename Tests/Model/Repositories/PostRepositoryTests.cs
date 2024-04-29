@@ -72,7 +72,16 @@ namespace Tests.Model.Repositories
         }
 
         [Test]
-        public void GetPostById_InvalidId_ExceptionThrown()
+        public void GetPostById_NonexistingId_ExceptionThrown()
+        {
+            postRepository.AddPost(new Post());
+
+            var exceptionMessage = Assert.Throws<Exception>(() => { postRepository.GetPostById(Guid.NewGuid()); });
+            Assert.That(exceptionMessage.Message, Is.EqualTo("Post does not exist!"));
+        }
+
+        [Test]
+        public void GetPostById_NoPosts_ExceptionThrown()
         {
             var exceptionMessage = Assert.Throws<Exception>(() => { postRepository.GetPostById(Guid.NewGuid()); });
             Assert.That(exceptionMessage.Message, Is.EqualTo("Post does not exist!"));
