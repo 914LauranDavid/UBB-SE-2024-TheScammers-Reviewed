@@ -86,6 +86,21 @@ namespace Tests.Model.Repositories
         }
 
         [Test]
+        public void UpdateUserUsername_NonxistingUser_NoUserIsChanged()
+        {
+            Guid addedUserId = Guid.NewGuid();
+            string usernameWhichShouldRemain = "shouldremain";
+            User addedUser = new User(addedUserId, usernameWhichShouldRemain, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+            string newUsername = "newName";
+            userRepository.AddUser(addedUser);
+
+            userRepository.UpdateUserUsername(Guid.NewGuid(), newUsername);
+
+            Assert.That(addedUser.Username, Is.EqualTo(usernameWhichShouldRemain));
+        }
+
+        [Test]
         public void UpdateUserDateOfBirth_ExistingUser_UsersDateOfBirthIsUpdated()
         {
             Guid addedUserId = Guid.NewGuid();
@@ -97,6 +112,21 @@ namespace Tests.Model.Repositories
             userRepository.UpdateUserDateOfBirth(addedUserId, newDateOfBirth);
 
             Assert.That(addedUser.DateOfBirth, Is.EqualTo(newDateOfBirth));
+        }
+
+        [Test]
+        public void UpdateUserDateOfBirth_NonxistingUser_NoUserDateOfBirthIsChanged()
+        {
+            Guid addedUserId = Guid.NewGuid();
+            DateOnly dateOfBirthWhichShouldRemain = DateOnly.Parse("10.10.2020");
+            User addedUser = new User(addedUserId, string.Empty, string.Empty, dateOfBirthWhichShouldRemain, string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+            DateOnly newDateOfBirth = DateOnly.FromDateTime(DateTime.Now);
+            userRepository.AddUser(addedUser);
+
+            userRepository.UpdateUserDateOfBirth(Guid.NewGuid(), newDateOfBirth);
+
+            Assert.That(addedUser.DateOfBirth, Is.EqualTo(dateOfBirthWhichShouldRemain));
         }
 
         [Test]
@@ -137,6 +167,22 @@ namespace Tests.Model.Repositories
         }
 
         [Test]
+        public void UpdateUserProfilePicture_NonexistingUser_NoProfilePictureIsChanged()
+        {
+            Guid addedUserId = Guid.NewGuid();
+            string profilePictureWhichShouldRemain = "profilepic";
+            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), profilePictureWhichShouldRemain, string.Empty,
+                DateTime.Now, new List<Guid>(),
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+            string newProfilePicture = "pic";
+            userRepository.AddUser(addedUser);
+
+            userRepository.UpdateUserProfilePicture(Guid.NewGuid(), newProfilePicture);
+
+            Assert.That(addedUser.ProfilePicture, Is.EqualTo(profilePictureWhichShouldRemain));
+        }
+
+        [Test]
         public void UpdateUserPassword_ExistingUser_UsersPasswordIsUpdated()
         {
             Guid addedUserId = Guid.NewGuid();
@@ -151,6 +197,21 @@ namespace Tests.Model.Repositories
         }
 
         [Test]
+        public void UpdateUserPassword_NonexistingUser_NoUsersPasswordIsChanged()
+        {
+            Guid addedUserId = Guid.NewGuid();
+            string passwordWhichShouldRemain = "originalpass";
+            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, passwordWhichShouldRemain, DateTime.Now, new List<Guid>(),
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+            string newPassword = "pass";
+            userRepository.AddUser(addedUser);
+
+            userRepository.UpdateUserPassword(Guid.NewGuid(), newPassword);
+
+            Assert.That(addedUser.Password, Is.EqualTo(passwordWhichShouldRemain));
+        }
+
+        [Test]
         public void UpdateUserNumberOfSells_ExistingUser_UsersNumberOfSellsIsUpdated()
         {
             Guid addedUserId = Guid.NewGuid();
@@ -162,6 +223,22 @@ namespace Tests.Model.Repositories
             userRepository.UpdateUserNumberOfSells(addedUserId, newNumberOfSells);
 
             Assert.That(addedUser.NumberOfSales, Is.EqualTo(newNumberOfSells));
+        }
+
+        [Test]
+        public void UpdateUserNumberOfSells_NonexistingUser_NoUsersNumberOfSellsIsChanged()
+        {
+            Guid addedUserId = Guid.NewGuid();
+            int numberOfSellsWhichShouldRemain = 99;
+            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(),
+                new List<Review>(), numberOfSellsWhichShouldRemain);
+            int newNumberOfSells = 123;
+            userRepository.AddUser(addedUser);
+
+            userRepository.UpdateUserNumberOfSells(Guid.NewGuid(), newNumberOfSells);
+
+            Assert.That(addedUser.NumberOfSales, Is.EqualTo(numberOfSellsWhichShouldRemain));
         }
 
         [Test]
